@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Pendataan Ormas - Kesbangpol Kota Banjarmasin</title>
+    <meta name="description" content="Portal resmi pendataan anggota organisasi masyarakat (Ormas) Kesbangpol Kota Banjarmasin. Daftarkan diri Anda secara online.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        :root { --orange: #FA8112; --dark: #454545; }
+        body { background: #f4f6fa; }
+
+        /* Header gradient */
+        .hero-header {
+            background: linear-gradient(145deg, #2d2d2d 0%, #454545 40%, #1a1a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(250,129,18,0.3) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -5%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(250,129,18,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Steps */
+        .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; transition: all 0.3s; }
+        .step-dot.active { background: var(--orange); color: white; box-shadow: 0 4px 12px rgba(250,129,18,0.45); }
+        .step-dot.done { background: #22c55e; color: white; }
+        .step-dot.inactive { background: #e5e7eb; color: #9ca3af; }
+        .step-line { height: 2px; flex: 1; background: #e5e7eb; transition: background 0.3s; }
+        .step-line.done { background: #22c55e; }
+
+        /* Card shadow */
+        .main-card { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 20px 40px -8px rgba(0,0,0,0.12); }
+
+        /* Animation */
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fade-up 0.5s ease-out forwards; }
+        
+        button, a.group { transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+        button:active:not(:disabled), a.group:active { transform: scale(0.95); }
+        .btn-primary { transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+        .btn-primary:active { transform: scale(0.95); }
+    </style>
+</head>
+
+<body class="min-h-screen antialiased">
+
+    <div class="min-h-screen flex flex-col">
+
+        <!-- Hero Header -->
+        <header class="hero-header px-6 py-8 sm:py-12 text-center relative z-10">
+            <div class="max-w-2xl mx-auto relative z-10">
+
+                <!-- Logos -->
+                <div class="flex items-center justify-center space-x-5 mb-8">
+                    <a href="https://www.banjarmasinkota.go.id/" target="_blank" rel="noopener noreferrer"
+                        class="bg-white/10 border border-white/15 backdrop-blur-sm p-3 rounded-2xl w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg group" title="Pemerintah Kota Banjarmasin">
+                        <img src="img/logo-bjm.png" alt="Logo Kota Banjarmasin" class="h-14 w-14 sm:h-16 sm:w-16 object-contain group-hover:scale-105 transition-transform">
+                    </a>
+                    <div class="h-12 w-px bg-white/20 hidden sm:block"></div>
+                    <a href="https://kesbangpol.banjarmasinkota.go.id/" target="_blank" rel="noopener noreferrer"
+                        class="bg-white/10 border border-white/15 backdrop-blur-sm p-3 rounded-2xl w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg group" title="Kesbangpol Banjarmasin">
+                        <img src="img/logo-kesbangpol.png" alt="Logo Kesbangpol" class="h-14 w-14 sm:h-16 sm:w-16 object-contain group-hover:scale-105 transition-transform">
+                    </a>
+                </div>
+
+                <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+                    Portal Informasi Ormas
+                </h1>
+                <p class="text-white/55 text-sm sm:text-base font-medium">
+                    Kesatuan Bangsa dan Politik · Kota Banjarmasin
+                </p>
+
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="index.html" class="bg-gradient-to-r from-[#FA8112] to-[#e07510] text-white font-bold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                        <span>Masuk ke Dashboard</span>
+                    </a>
+                    <a href="login.html" class="bg-white/10 border border-white/30 text-white font-bold py-3 px-8 rounded-xl hover:bg-white/20 transition-all flex items-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <span>Login Admin</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Info Section -->
+        <div class="flex-1 flex justify-center px-4 py-8 sm:py-10">
+            <div class="w-full max-w-2xl fade-up">
+                <div class="bg-white rounded-3xl main-card overflow-hidden">
+                    <div class="p-6 sm:p-8 space-y-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-3">Tentang Portal Ini</h2>
+                            <p class="text-gray-600 leading-relaxed">
+                                Portal Pendataan Ormas Kesbangpol Kota Banjarmasin adalah sistem informasi terintegrasi untuk mendaftar dan mengelola data anggota organisasi masyarakat (Ormas) di Kota Banjarmasin.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">Fitur Utama:</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-[#FA8112] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span class="text-gray-700"><strong>Pendaftaran Ormas:</strong> Daftarkan organisasi Anda dengan data lengkap dan dokumen wajib.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-[#FA8112] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span class="text-gray-700"><strong>Cek Status:</strong> Pantau status pendaftaran ormas Anda secara real-time.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-[#FA8112] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span class="text-gray-700"><strong>Kelola Data Anggota:</strong> Atur data anggota ormas dengan mudah dan aman.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-[#FA8112] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span class="text-gray-700"><strong>Verifikasi Admin:</strong> Admin akan memverifikasi data Anda untuk validasi resmi.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <div>
+                                    <p class="text-blue-700 font-semibold text-sm mb-1">Hubungi Kami</p>
+                                    <p class="text-blue-600 text-sm">Untuk bantuan dan informasi lebih lanjut, hubungi Kesbangpol Kota Banjarmasin atau klik tombol Masuk di atas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer note -->
+                <p class="text-center text-xs text-gray-400 mt-5 pb-6">
+                    Data Anda dilindungi dan hanya digunakan untuk keperluan administrasi Kesbangpol. <br>
+                    &copy; 2024 Kesbangpol Kota Banjarmasin
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script>
+        (async function() {
+            try {
+                if (!window.supabaseClient) return;
+                const { data: { session } } = await window.supabaseClient.auth.getSession();
+                if (session) {
+                    window.location.href = 'index.html';
+                }
+            } catch (e) { console.warn('Auto-redirect gagal:', e.message || e); }
+        })();
+    </script>
+</body>
+</html>

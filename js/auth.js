@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    // Pastikan koneksi global Supabase ada dari config.js
     if (!window.supabaseClient) {
         console.error('Supabase Client tidak ditemukan. Pastikan config.js dimuat sebelum auth.js');
         return;
@@ -11,33 +10,41 @@ document.addEventListener('DOMContentLoaded', async function () {
     const errorMessage = document.getElementById('error-message');
     const errorText = document.getElementById('error-text');
 
-    /**
-     * =========================================================
-     * FITUR 1: PROTEKSI HALAMAN (Session Check)
-     * =========================================================
-     */
+    const params = new URLSearchParams(window.location.search);
+    const requestRole = params.get('role') || 'admin';
+    const rawNext = params.get('next');
+    const nextPage = rawNext ? decodeURIComponent(rawNext) : (requestRole === 'user' ? 'public.html' : 'admin.html');
+
+    function getPageType(pathname) {
+        if (pathname.endsWith('admin.html')) return 'admin';
+        if (pathname.endsWith('public.html')) return 'user';
+        return null;
+    }
+
     async function checkSession() {
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
-        
-        const isLoginPage = window.location.pathname.includes('login.html');
-        
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        const pathname = window.location.pathname;
+        const isLoginPage = pathname.includes('login.html');
+
         if (session && isLoginPage) {
-            // Jika sudah login dan di halaman login, pindah ke admin
-            window.location.href = 'admin.html';
-        } else if (!session && !isLoginPage) {
-            // Jika belum login dan mencoba akses admin, tendang ke login
-            window.location.href = 'login.html';
+            window.location.href = nextPage;
+            return;
+        }
+
+        if (!session && !isLoginPage) {
+            const pageType = getPageType(pathname);
+            if (pageType === 'admin') {
+                window.location.href = `login.html?role=admin&next=${encodeURIComponent('admin.html')}`;
+            } else if (pageType === 'user') {
+                const currentFeature = new URLSearchParams(window.location.search).get('feature');
+                const next = currentFeature ? `public.html?feature=${currentFeature}` : 'public.html';
+                window.location.href = `login.html?role=user&next=${encodeURIComponent(next)}`;
+            }
         }
     }
 
-    // Jalankan cek sesi segera
     checkSession();
 
-    /**
-     * =========================================================
-     * FITUR 2: LOGIKA LOGIN
-     * =========================================================
-     */
     if (loginForm) {
         loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -45,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
 
-            // Reset UI
             errorMessage.classList.add('hidden');
             loginBtn.disabled = true;
             loginBtn.innerHTML = `
@@ -55,41 +61,27 @@ document.addEventListener('DOMContentLoaded', async function () {
                 </svg>`;
 
             try {
-                const { data, error } = await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) throw error;
-
-                // Success
-                window.location.href = 'admin.html';
+                window.location.href = nextPage;
             } catch (err) {
-                console.error('Login error:', err.message);
+                console.error('Login error:', err.message || err);
                 errorMessage.classList.remove('hidden');
                 errorText.innerText = err.message || 'Email atau password salah!';
-                
-                // Reset button
                 loginBtn.disabled = false;
                 loginBtn.innerText = 'Masuk Sekarang';
             }
         });
     }
 
-    /**
-     * =========================================================
-     * FITUR 3: LOGIKA LOGOUT (Hanya di halaman admin)
-     * =========================================================
-     */
     window.handleLogout = async function () {
         if (!confirm('Anda yakin ingin keluar dari sistem?')) return;
-        
+
         try {
             await supabaseClient.auth.signOut();
             window.location.href = 'login.html';
         } catch (err) {
-            alert('Gagal logout: ' + err.message);
+            alert('Gagal logout: ' + (err.message || err));
         }
     };
-
 });
