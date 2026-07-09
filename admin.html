@@ -85,8 +85,10 @@
         /* Table & inputs */
         .search-input { border:1.5px solid #e5e7eb; background:rgba(255,255,255,0.9); border-radius:12px; transition:all 0.2s; }
         .search-input:focus { border-color:#FA8112; box-shadow:0 0 0 4px rgba(250,129,18,0.15); outline:none; }
-        .data-table { border-collapse:separate; border-spacing:0; }
+        .data-table { border-collapse:separate; border-spacing:0; table-layout:auto; width:100%; min-width:1200px; }
         .data-table thead th { background:linear-gradient(135deg,#302b63,#0f0c29); color:rgba(255,255,255,0.9); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:14px 18px; white-space:nowrap; }
+        .data-table thead th, .data-table tbody td { white-space:nowrap; }
+        .data-table tbody td { overflow:hidden; text-overflow:ellipsis; }
         .data-table tbody tr { border-bottom:1px solid #f3f4f6; transition:all 0.2s ease; }
         .data-table tbody tr:hover { background:linear-gradient(90deg,#fff9f3,#fef3ff); }
         .form-input-admin { border:1.5px solid #e5e7eb; background:#fafafa; border-radius:10px; transition:all 0.2s; font-size:13px; padding:9px 13px; width:100%; }
@@ -489,7 +491,7 @@
                         <h3 class="text-base font-bold text-gray-800">Ringkasan Aktivitas Sistem</h3>
                         <p class="text-xs text-gray-400 mt-1">Kartu statistik di atas menyajikan ikhtisar data ormas secara real-time dari database. Untuk mengelola data, silakan klik tombol di sebelah kanan.</p>
                     </div>
-                    <button onclick="switchTab('arsip')" class="w-full sm:w-auto bg-gradient-to-r from-[#FA8112] to-[#e07510] text-white font-bold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all text-sm flex items-center justify-center gap-2">
+                    <button onclick="switchTab('anggota')" class="w-full sm:w-auto bg-gradient-to-r from-[#FA8112] to-[#e07510] text-white font-bold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all text-sm flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                         Kelola Database Ormas
                     </button>

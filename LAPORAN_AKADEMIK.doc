@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Laporan Akademik — Portal Pendataan Ormas</title>
+<style>
+  body { font-family: 'Times New Roman', Times, serif; margin: 48px; color: #111; }
+  .title { text-align: center; margin-top: 140px; }
+  h1 { font-size: 22pt; margin-bottom: 6px; }
+  h2 { font-size: 14pt; margin-top: 24px; }
+  h3 { font-size: 12pt; margin-top: 18px; }
+  p { font-size: 12pt; line-height: 1.45; text-align: justify; }
+  .meta { margin-top: 20px; font-size: 12pt; }
+  .abstract { margin-top: 30px; border-left: 4px solid #333; padding-left: 12px; }
+  .toc { margin-top: 20px; }
+  .section { page-break-inside: avoid; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+  th, td { border: 1px solid #333; padding: 6px 8px; font-size: 11pt; }
+  .footer { font-size: 10pt; text-align: center; margin-top: 40px; color: #444; }
+</style>
+</head>
+<body>
+  <div class="title">
+    <h1>PORTAL PENDAFTARAN ORGANISASI MASYARAKAT (ORMAS)</h1>
+    <h3>LAPORAN AKADEMIK TEKNIS</h3>
+    <p class="meta">Kesbangpol Kota Banjarmasin — Pengembangan Sistem Informasi</p>
+    <p class="meta">Penyusun: Tim Pengembang • Tanggal: 9 Juli 2026</p>
+  </div>
+
+  <div style="margin-top:40px;">
+    <h2>Abstrak</h2>
+    <div class="abstract">
+      <p>
+        Laporan ini menyajikan uraian teknis dan hasil pekerjaan pengembangan serta perbaikan pada "Portal Pendataan Ormas" milik Kesbangpol Kota Banjarmasin. Sistem yang dikembangkan terdiri dari portal publik untuk pendaftaran anggota ormas (dengan fitur unggah dokumen dan pemrosesan OCR), dashboard admin untuk manajemen data, serta integrasi penyimpanan menggunakan Supabase (Postgres + Storage). Fokus pekerjaan meliputi perbaikan alur pengiriman form, peningkatan responsivitas tabel admin, dan penambahan fitur ekspor data ke format Excel yang menyertakan tautan unduh dokumen.
+      </p>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h2>Daftar Isi</h2>
+    <ol>
+      <li>Pendahuluan</li>
+      <li>Tujuan dan Ruang Lingkup</li>
+      <li>Teknologi dan Arsitektur Sistem</li>
+      <li>Metode Pengembangan dan Alur Data</li>
+      <li>Perbaikan yang Dilakukan</li>
+      <li>Hasil dan Verifikasi</li>
+      <li>Diskusi dan Rekomendasi</li>
+      <li>Kesimpulan</li>
+      <li>Lampiran (File yang Diubah)</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>1. Pendahuluan</h2>
+    <p>
+      Portal Pendataan Ormas adalah aplikasi web yang dirancang untuk memudahkan pendaftaran organisasi masyarakat dan pengelolaan data anggotanya oleh Kesbangpol Kota Banjarmasin. Sistem memungkinkan warga mendaftarkan organisasi dan mengunggah dokumen identitas (KTP, NPWP) dan bukti rekening sebagai bagian dari verifikasi administrasi. Kebutuhan akan sistem ini muncul dari permintaan efisiensi proses administratif serta keterbukaan manajemen data.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>2. Tujuan dan Ruang Lingkup</h2>
+    <p>
+      Tujuan pengembangan adalah menyediakan alur pendaftaran online yang andal, memudahkan verifikasi oleh admin, dan menyimpan bukti dokumen secara terpusat. Ruang lingkup laporan ini mencakup arsitektur teknis, implementasi front-end, integrasi Supabase (database & storage), perbaikan bug, dan fitur ekspor data.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>3. Teknologi dan Arsitektur Sistem</h2>
+    <p>
+      Sistem dibangun menggunakan teknologi front-end berbasis HTML, Tailwind CSS (CDN), dan Vanilla JavaScript, serta backend-as-a-service menggunakan Supabase untuk penyimpanan data (Postgres) dan file (Storage). Komponen utama:
+    </p>
+    <ul>
+      <li><strong>Frontend:</strong> `index.html` (portal publik), `admin.html` (dashboard admin), `public.html`.</li>
+      <li><strong>Client scripts:</strong> `js/config.js` (inisialisasi Supabase), `js/form.js` (alur pendaftaran & OCR), `js/admin.js` (tampilan admin, export Excel), `js/auth.js` (otentikasi).</li>
+      <li><strong>Backend & Storage:</strong> Supabase (tabel `pendaftar_ormas`, bucket `dokumen_ormas`).</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Metode Pengembangan dan Alur Data</h2>
+    <p>
+      Pendekatan pengembangan mengikuti model iteratif: identifikasi issue dari pengujian manual → perbaikan kode frontend → verifikasi fungsional. Alur data utama:
+    </p>
+    <ol>
+      <li>Pengguna mengisi form multi-step di `index.html` dan mengunggah dokumen.</li>
+      <li>File gambar diproses client-side (resize & preprocessing via canvas) lalu dikirim ke OCR.space untuk ekstraksi teks.</li>
+      <li>Hasil OCR ditampilkan dalam modal verifikasi; pengguna dapat mengoreksi data secara manual.</li>
+      <li>Setelah konfirmasi, file diunggah ke Supabase Storage dan URL publik disimpan bersama data pendaftar di tabel `pendaftar_ormas`.</li>
+      <li>Admin mengakses `admin.html` untuk melihat, mengubah status, menghapus data, dan mengekspor data ke Excel.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>5. Perbaikan yang Dilakukan</h2>
+    <p>
+      Selama sesi pengembangan ini, beberapa perbaikan kunci diimplementasikan:
+    </p>
+    <ol>
+      <li><strong>Perbaikan alur submit:</strong> Tombol submit pada `index.html` diubah menjadi `type="submit"` agar `js/form.js` menjadi pengendali tunggal proses pengiriman, sehingga OCR, upload, dan insert ke database berjalan konsisten.</li>
+      <li><strong>Hapus handler inline konflik:</strong> Skrip inline yang menimpa perilaku modal dihapus sehingga tidak ada intervensi duplikat.</li>
+      <li><strong>Responsivitas tabel admin:</strong> `admin.html` diperbarui agar tabel dapat digulir horizontal dan tidak memotong kolom pada layar kecil.</li>
+      <li><strong>Export Excel:</strong> `js/admin.js` diperbarui menambahkan pengecekan `ExcelJS` dan menambah kolom yang memuat hyperlink unduh untuk foto KTP/NPWP/Rekening.</li>
+      <li><strong>Perbaikan navigasi:</strong> Tombol "Kelola Database Ormas" pada kartu statistik diarahkan ke tab Data Anggota Sosialisasi untuk kemudahan akses admin.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>6. Hasil dan Verifikasi</h2>
+    <p>
+      Hasil verifikasi dilakukan dengan skenario pengujian manual: pendaftaran publik dengan unggah dokumen, pemeriksaan konsol browser (DevTools), verifikasi muncul di dashboard admin, dan uji export Excel. Hasil yang dicapai:
+    </p>
+    <ul>
+      <li>Form publik kini dapat menyimpan data ke Supabase dan mengunggah file ke storage.</li>
+      <li>Tabel admin menampilkan data dan mendukung horizontal scrolling sehingga kolom tidak terpotong.</li>
+      <li>File Excel yang diekspor berisi tautan unduh untuk setiap dokumen yang diunggah.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>7. Diskusi dan Rekomendasi</h2>
+    <p>
+      Beberapa catatan penting dan rekomendasi:
+    </p>
+    <ol>
+      <li><strong>OCR & Skalabilitas:</strong> Penggunaan layanan OCR gratis (OCR.space) berisiko limitasi pada trafik tinggi; direkomendasikan migrasi ke layanan berbayar atau pemrosesan server-side untuk antrian (queue) dan retry otomatis.</li>
+      <li><strong>Keamanan & Privasi Dokumen:</strong> Saat ini file diunggah sebagai URL publik. Jika dokumen bersifat sensitif, pertimbangkan penggunaan signed URLs atau kontrol akses yang ketat (RLS, tokenized downloads).</li>
+      <li><strong>Embed gambar ke Excel:</strong> Saat ini export menghasilkan hyperlink; opsi embedding gambar ke workbook dapat ditambahkan namun akan meningkatkan ukuran file besar dan memerlukan fetching binary saat pembuatan workbook.</li>
+      <li><strong>RLS & Permissions:</strong> Pastikan aturan Row Level Security di Supabase disesuaikan agar hanya admin dapat mengakses/publik melakukan operasi yang aman.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>8. Kesimpulan</h2>
+    <p>
+      Perbaikan yang dilakukan meningkatkan keandalan alur pendaftaran publik dan pengalaman admin dalam mengelola data. Fitur export yang kini menyertakan tautan dokumen memudahkan akses bukti administrasi. Rekomendasi selanjutnya berfokus pada aspek privasi, skalabilitas OCR, dan opsi peningkatan UX bagi admin.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>9. Lampiran — File yang Diubah</h2>
+    <table>
+      <thead>
+        <tr><th>Nama File</th><th>Deskripsi Perubahan</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>index.html</td><td>Perbaikan tombol submit & penghapusan handler inline konflik.</td></tr>
+        <tr><td>admin.html</td><td>Responsivitas tabel, pengalihan tombol Kelola Database Ormas.</td></tr>
+        <tr><td>js/form.js</td><td>Alur OCR, preprocessing, upload ke Supabase, insert ke tabel `pendaftar_ormas`.</td></tr>
+        <tr><td>js/admin.js</td><td>Pengecekan ExcelJS dan penambahan kolom hyperlink pada export Excel.</td></tr>
+        <tr><td>js/config.js</td><td>Inisialisasi `supabaseClient` diverifikasi.</td></tr>
+        <tr><td>REPORT_PRESENTATION.md</td><td>Laporan ringkas dibuat sebelumnya.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>10. Referensi</h2>
+    <p>
+      Dokumen teknis ini mengacu pada kode sumber pada workspace: `index.html`, `admin.html`, `public.html`, `js/config.js`, `js/form.js`, `js/admin.js` serta sumber layanan pihak ketiga: Supabase dan OCR.space.
+    </p>
+  </div>
+
+  <div class="footer">Dokumen ini dibuat otomatis dari hasil pengembangan dan audit singkat. Untuk revisi silakan minta pembaruan.</div>
+</body>
+</html>

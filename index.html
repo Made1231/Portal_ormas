@@ -268,7 +268,7 @@
                             <button type="button" class="px-6 py-3 bg-white border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition" onclick="prevPage()">
                                 Kembali
                             </button>
-                            <button type="button" class="btn-orange px-6 py-3 text-white font-bold rounded-xl transition flex items-center gap-2" onclick="submitForm()">
+                            <button type="submit" class="btn-orange px-6 py-3 text-white font-bold rounded-xl transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 Verifikasi & Kirim Data
                             </button>
@@ -413,32 +413,8 @@
             return true;
         }
 
-        function submitForm() {
-            if (!validatePage(currentPage)) return;
-            
-            const modal = document.getElementById('modal-ocr');
-            modal.style.opacity = '1';
-            modal.style.pointerEvents = 'auto';
-            
-            document.getElementById('ocr-nama-ormas').value = document.getElementById('input-nama-ormas').value;
-            document.getElementById('ocr-wa').value = document.getElementById('input-wa').value;
-        }
-
-        document.getElementById('btn-cancel-ocr').addEventListener('click', () => {
-            const modal = document.getElementById('modal-ocr');
-            modal.style.opacity = '0';
-            modal.style.pointerEvents = 'none';
-        });
-
-        document.getElementById('btn-confirm-ocr').addEventListener('click', async () => {
-            alert('Data telah dikonfirmasi dan siap dikirim ke admin!');
-            const modal = document.getElementById('modal-ocr');
-            modal.style.opacity = '0';
-            modal.style.pointerEvents = 'none';
-            document.getElementById('pendataan-form').reset();
-            currentPage = 1;
-            showPage(1);
-        });
     </script>
+</body>
+</html>
 </body>
 </html>

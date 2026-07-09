@@ -247,6 +247,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // ═══════════════════════════════════════════════════════════════════════════
     if (exportBtn) {
         exportBtn.addEventListener('click', function () {
+            if (typeof ExcelJS === 'undefined') {
+                alert('Library ExcelJS belum dimuat. Silakan refresh halaman dan coba lagi.');
+                return;
+            }
             if (globalDataRecords.length === 0) { alert('Tidak ada data untuk diekspor.'); return; }
 
             const workbook = new ExcelJS.Workbook();
@@ -263,6 +267,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { header: 'Nama Bank', key: 'bank', width: 20 },
                 { header: 'No Rekening', key: 'norek', width: 22 },
                 { header: 'No NPWP', key: 'npwp', width: 25 },
+                { header: 'Foto KTP', key: 'url_ktp', width: 30 },
+                { header: 'Foto NPWP', key: 'url_npwp', width: 30 },
+                { header: 'Foto Rekening', key: 'url_rek', width: 30 },
                 { header: 'Status', key: 'status', width: 15 },
                 { header: 'Tanggal Daftar', key: 'tgl', width: 20 }
             ];
@@ -292,12 +299,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     bank,
                     norek,
                     npwp:   item.npwp || '-',
+                    url_ktp:  item.foto_ktp_url ? { text: 'Unduh KTP', hyperlink: item.foto_ktp_url } : '-',
+                    url_npwp: item.foto_npwp_url ? { text: 'Unduh NPWP', hyperlink: item.foto_npwp_url } : '-',
+                    url_rek:  item.foto_rekening_url ? { text: 'Unduh Rekening', hyperlink: item.foto_rekening_url } : '-',
                     status: item.status && item.status.toLowerCase() === 'valid' ? 'Valid' : 'Pending',
                     tgl:    item.created_at ? item.created_at.split('T')[0] : '-'
                 });
-                row.eachCell(cell => {
+                row.eachCell({ includeEmpty: true }, cell => {
                     cell.border = { top:{style:'thin'}, left:{style:'thin'}, bottom:{style:'thin'}, right:{style:'thin'} };
                     cell.alignment = { vertical: 'middle', horizontal: 'left' };
+                });
+                ['url_ktp','url_npwp','url_rek'].forEach(key => {
+                    const cell = row.getCell(key);
+                    if (cell && cell.value && cell.value.hyperlink) {
+                        cell.font = { color: { argb: 'FF0563C1' }, underline: true };
+                        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+                    }
                 });
             });
 
