@@ -14,7 +14,7 @@
         body {
             background: #0a0f1e;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
         }
         .orb {
             position: absolute;
@@ -85,97 +85,143 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <!-- Login Card -->
-    <main class="glass-card rounded-3xl w-full max-w-md relative z-10 fade-up">
-        <div class="p-8 sm:p-10">
+    <!-- Main Wrapper to stack login card and demo card vertically -->
+    <div class="flex flex-col gap-5 w-full max-w-md relative z-10 fade-up my-8">
+        <!-- Login Card -->
+        <main class="glass-card rounded-3xl w-full">
+            <div class="p-8 sm:p-10">
 
-            <!-- Branding -->
-            <div class="flex flex-col items-center mb-8 text-center fade-up-delay">
-                <div class="flex items-center space-x-4 mb-6">
-                    <a href="https://banjarmasinkota.go.id/" target="_blank" class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center border border-white/15 shadow-lg hover:bg-white/20 transition-colors cursor-pointer" title="Pemerintah Kota Banjarmasin">
-                        <img src="img/logo-bjm.png" alt="Logo Banjarmasin" class="h-12 w-12 object-contain">
-                    </a>
-                    <div class="w-px h-12 bg-white/15"></div>
-                    <a href="https://kesbangpol.banjarmasinkota.go.id/" target="_blank" class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center border border-white/15 shadow-lg hover:bg-white/20 transition-colors cursor-pointer" title="Kesbangpol Banjarmasin">
-                        <img src="img/logo-kesbangpol.png" alt="Logo Kesbangpol" class="h-12 w-12 object-contain">
-                    </a>
-                </div>
-                <h1 class="text-2xl font-bold text-white tracking-tight">Portal Admin</h1>
-                <p class="text-sm text-white/45 mt-1.5 font-medium">Kesbangpol Kota Banjarmasin</p>
-                <div class="mt-4 px-4 py-1.5 bg-[#FA8112]/10 border border-[#FA8112]/25 rounded-full">
-                    <span class="text-[#FA8112] text-xs font-semibold tracking-wide uppercase">Akses Terbatas</span>
-                </div>
-            </div>
-
-            <!-- Login Form -->
-            <form id="login-form" class="space-y-4">
-                <div>
-                    <label for="email" class="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">Email Administrator</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <svg class="h-4.5 w-4.5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206"/>
-                            </svg>
-                        </div>
-                        <input type="email" id="email" name="email"
-                            class="input-field pl-11 w-full px-4 py-3.5 rounded-xl text-sm font-medium"
-                            placeholder="admin@kesbangpol.go.id" autocomplete="email" required>
+                <!-- Branding -->
+                <div class="flex flex-col items-center mb-8 text-center fade-up-delay">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <a href="https://banjarmasinkota.go.id/" target="_blank" class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center border border-white/15 shadow-lg hover:bg-white/20 transition-colors cursor-pointer" title="Pemerintah Kota Banjarmasin">
+                            <img src="img/logo-bjm.png" alt="Logo Banjarmasin" class="h-12 w-12 object-contain">
+                        </a>
+                        <div class="w-px h-12 bg-white/15"></div>
+                        <a href="https://kesbangpol.banjarmasinkota.go.id/" target="_blank" class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center border border-white/15 shadow-lg hover:bg-white/20 transition-colors cursor-pointer" title="Kesbangpol Banjarmasin">
+                            <img src="img/logo-kesbangpol.png" alt="Logo Kesbangpol" class="h-12 w-12 object-contain">
+                        </a>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white tracking-tight">Portal Admin</h1>
+                    <p class="text-sm text-white/45 mt-1.5 font-medium">Kesbangpol Kota Banjarmasin</p>
+                    <div class="mt-4 px-4 py-1.5 bg-[#FA8112]/10 border border-[#FA8112]/25 rounded-full">
+                        <span class="text-[#FA8112] text-xs font-semibold tracking-wide uppercase">Akses Terbatas</span>
                     </div>
                 </div>
 
-                <div>
-                    <label for="password" class="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">Password</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <svg class="h-4.5 w-4.5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">Email Administrator</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="h-4.5 w-4.5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206"/>
+                                </svg>
+                            </div>
+                            <input type="email" id="email" name="email"
+                                class="input-field pl-11 w-full px-4 py-3.5 rounded-xl text-sm font-medium"
+                                placeholder="admin@kesbangpol.go.id" value="admin@intanbjm.com" autocomplete="email" required>
                         </div>
-                        <input type="password" id="password" name="password"
-                            class="input-field pl-11 w-full px-4 py-3.5 rounded-xl text-sm font-medium"
-                            placeholder="••••••••••••" autocomplete="current-password" required>
-                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/30 hover:text-white/60 transition-colors">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
-                        </button>
                     </div>
-                </div>
 
-                <!-- Error Message -->
-                <div id="error-message" class="hidden">
-                    <div class="flex items-center space-x-2.5 bg-red-500/10 border border-red-500/25 rounded-xl px-4 py-3">
-                        <svg class="w-4 h-4 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <div>
+                        <label for="password" class="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="h-4.5 w-4.5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <input type="password" id="password" name="password"
+                                class="input-field pl-11 w-full px-4 py-3.5 rounded-xl text-sm font-medium"
+                                placeholder="••••••••••••" value="Admin@2024!" autocomplete="current-password" required>
+                            <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/30 hover:text-white/60 transition-colors">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="error-message" class="hidden">
+                        <div class="flex items-center space-x-2.5 bg-red-500/10 border border-red-500/25 rounded-xl px-4 py-3">
+                            <svg class="w-4 h-4 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span id="error-text" class="text-sm font-medium text-red-400">Email atau password salah!</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="login-btn" class="btn-login w-full text-white font-bold py-4 px-6 rounded-xl text-sm mt-2">
+                        Masuk Sekarang
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <a href="index.html" class="inline-flex items-center text-sm text-white/30 hover:text-[#FA8112] transition-colors duration-200 font-medium">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
-                        <span id="error-text" class="text-sm font-medium text-red-400">Email atau password salah!</span>
+                        Kembali ke Portal Publik
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom accent -->
+            <div class="h-1 w-full bg-gradient-to-r from-transparent via-[#FA8112] to-transparent opacity-40 rounded-b-3xl"></div>
+        </main>
+
+        <!-- Demo Accounts Card -->
+        <section class="glass-card rounded-3xl w-full p-6 sm:p-8 flex flex-col items-center">
+            <h2 class="text-md font-bold text-white/80 tracking-wide mb-4">Akun Demo:</h2>
+            <div class="w-full space-y-3.5">
+                <!-- Admin Account -->
+                <div class="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                    <div class="text-left">
+                        <div class="text-xs font-bold text-[#FA8112] uppercase tracking-wider mb-0.5">Admin</div>
+                        <div class="text-sm font-medium text-white/70 font-mono">admin@intanbjm.com</div>
                     </div>
+                    <button onclick="autofill('admin@intanbjm.com', 'Admin@2024!')" class="px-4 py-2 bg-[#FA8112] hover:bg-[#e07510] text-white text-xs font-bold rounded-xl transition duration-200 shadow-md active:scale-95">
+                        Autofill
+                    </button>
                 </div>
 
-                <button type="submit" id="login-btn" class="btn-login w-full text-white font-bold py-4 px-6 rounded-xl text-sm mt-2">
-                    Masuk Sekarang
-                </button>
-            </form>
-
-            <div class="mt-6 text-center">
-                <a href="index.html" class="inline-flex items-center text-sm text-white/30 hover:text-[#FA8112] transition-colors duration-200 font-medium">
-                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                    </svg>
-                    Kembali ke Portal Publik
-                </a>
+                <!-- User Account 1 -->
+                <div class="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                    <div class="text-left">
+                        <div class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-0.5">User 1</div>
+                        <div class="text-sm font-medium text-white/70 font-mono">user1@devstore.com</div>
+                    </div>
+                    <button onclick="autofill('user1@devstore.com', 'password')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition duration-200 shadow-md active:scale-95">
+                        Autofill
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <!-- Bottom accent -->
-        <div class="h-1 w-full bg-gradient-to-r from-transparent via-[#FA8112] to-transparent opacity-40 rounded-b-3xl"></div>
-    </main>
+            
+            <div class="mt-4 text-center">
+                <span class="text-xs font-semibold text-white/40 uppercase tracking-widest">Password:</span>
+                <code class="ml-1 text-xs font-mono font-bold text-[#FA8112] bg-[#FA8112]/10 px-2 py-1 rounded">Admin@2024! / password</code>
+            </div>
+        </section>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script>
+        // Autofill credentials
+        window.autofill = function(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn) {
+                loginBtn.focus();
+            }
+        };
+
         // Toggle password visibility
         document.getElementById('toggle-password').addEventListener('click', function() {
             const pw = document.getElementById('password');
